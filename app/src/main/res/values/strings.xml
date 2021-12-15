@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Event Buddy</string>
+
+    <string-array name="features">
+        <item>Navigate</item>
+        <item>Login</item>
+        <item>Register</item>
+        <item>Events</item>
+        <item>Profile</item>
+        <item>Propose Event</item>
+    </string-array>
+</resources>
