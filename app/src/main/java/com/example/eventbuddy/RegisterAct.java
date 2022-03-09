@@ -1,7 +1,5 @@
 package com.example.eventbuddy;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,13 +15,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterAct extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    EditText mName,mEmail,mPassword,mRePassword;
+    Button register;
+    FirebaseAuth fAuth;
+    ProgressBar progressBar;
+    FirebaseFirestore fStore;
+    String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +76,9 @@ public class RegisterAct extends AppCompatActivity implements AdapterView.OnItem
         EditText mEmail = findViewById(R.id.email);
         EditText mPassword = findViewById(R.id.pass);
         EditText mRePassword = findViewById(R.id.repass);
+
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
         ProgressBar progressBar = findViewById(R.id.progressBar);
 
 
@@ -119,10 +134,28 @@ public class RegisterAct extends AppCompatActivity implements AdapterView.OnItem
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if ( task.isSuccessful()){
                             Toast.makeText(RegisterAct.this,"User created!",Toast.LENGTH_SHORT).show();
+                            userID = fAuth.getCurrentUser().getUid();
+                            DocumentReference documentReference = fStore.collection("users").document(userID);
+                            Map<String,Object> user = new HashMap<>();
+                            user.put("fName",name);
+                            user.put("fEmail",email);
+                          //  user.put("fPassword",password);
+                          //  user.put("fRePassword",repassword);
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>(){
+
+                                private static final String TAG = "TAG";
+
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(RegisterAct.this,"User created!",Toast.LENGTH_SHORT).show();
+                                    //System.out.println("User created! " + userID);
+                                }
+                            });
                             startActivity(new Intent(getApplicationContext(),Events.class));
                         }
                         else{
                             Toast.makeText(RegisterAct.this,"Error",Toast.LENGTH_SHORT).show();
+                            //System.out.println("Error");
                         }
                     }
                 });
