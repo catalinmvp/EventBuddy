@@ -139,6 +139,7 @@ public class RegisterAct extends AppCompatActivity implements AdapterView.OnItem
                             Map<String,Object> user = new HashMap<>();
                             user.put("fName",name);
                             user.put("fEmail",email);
+                            user.put("fPass",password);
                           //  user.put("fPassword",password);
                           //  user.put("fRePassword",repassword);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>(){
