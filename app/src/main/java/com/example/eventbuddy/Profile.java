@@ -1,10 +1,13 @@
 package com.example.eventbuddy;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +17,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -23,11 +29,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class Profile extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    TextView name,email,phone_nr;
+    TextView name,email,phone_nr,verify_msg;
     Button logout;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
+    Button verify_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +70,35 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemSele
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
+        verify_button = findViewById(R.id.verify);
+        verify_msg = findViewById(R.id.notverify_text);
+
         userId = fAuth.getCurrentUser().getUid();
+
+        FirebaseUser fUser = fAuth.getCurrentUser();
+
+        if(!fUser.isEmailVerified()){
+            verify_button.setVisibility(View.VISIBLE);
+            verify_msg.setVisibility(View.VISIBLE);
+            verify_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    fUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(v.getContext(),"Verification Mail Sent",Toast.LENGTH_SHORT).show();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("tag","Email not sent" + e.getMessage());
+                        }
+                    });
+                }
+            });
+        }
 
         DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this,new EventListener<DocumentSnapshot>() {
@@ -80,7 +115,10 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemSele
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logout(v);
+
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(),Login.class));
+                finish();
             }
         });
 
@@ -109,10 +147,10 @@ public class Profile extends AppCompatActivity implements AdapterView.OnItemSele
         }else if(text.equals("Propose Event")){
             startActivity(new Intent(Profile.this,ProposeEvent.class));
         }
-        // else if(text.equals("Login"))
-        // {
-        //     startActivity(new Intent(MainActivity.this, Login.class));
-        //  }
+         else if(text.equals("Login"))
+         {
+             startActivity(new Intent(Profile.this, Login.class));
+          }
 
     }
 

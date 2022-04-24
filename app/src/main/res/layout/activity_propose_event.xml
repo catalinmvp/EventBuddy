@@ -94,8 +94,8 @@
 
     <TextView
         android:id="@+id/Form"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_width="96dp"
+        android:layout_height="24dp"
         android:text="Event Form "
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,10 +104,10 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner"
         app:layout_constraintVertical_bias="0.057" />
 
-    <TextView
+    <EditText
         android:id="@+id/event_name"
-        android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_width="168dp"
+        android:layout_height="43dp"
         android:text="Event name"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,17 +116,18 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner"
         app:layout_constraintVertical_bias="0.205" />
 
-    <TextView
+    <EditText
         android:id="@+id/event_link"
-        android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_width="223dp"
+        android:layout_height="42dp"
         android:text="Event link"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.165"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner"
-        app:layout_constraintVertical_bias="0.276" />
+        android:inputType="textNoSuggestions"
+        app:layout_constraintVertical_bias="0.32" />
 
     <Button
         android:id="@+id/button_form"
@@ -136,9 +137,11 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        android:inputType="textNoSuggestions"
+        app:layout_constraintVertical_bias="0.761" />
 
-    <TextView
+    <EditText
         android:id="@+id/event_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -148,17 +151,19 @@
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner"
-        app:layout_constraintVertical_bias="0.337" />
+        android:inputType="textNoSuggestions"
+        app:layout_constraintVertical_bias="0.423" />
 
-    <TextView
+    <EditText
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location - find me on maps"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.177"
+        app:layout_constraintHorizontal_bias="0.231"
         app:layout_constraintStart_toStartOf="parent"
+        android:inputType="textNoSuggestions"
         app:layout_constraintTop_toBottomOf="@+id/spinner"
-        app:layout_constraintVertical_bias="0.411" />
+        app:layout_constraintVertical_bias="0.553" />
 </androidx.constraintlayout.widget.ConstraintLayout>

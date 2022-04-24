@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,7 +94,7 @@ public class Login extends AppCompatActivity implements AdapterView.OnItemSelect
                          public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
                                     Toast.makeText(Login.this,"Login succesful",Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(),Events.class));
+                                    startActivity(new Intent(getApplicationContext(),Profile.class));
                                 }else {
                                     Toast.makeText(Login.this,"Bad Credentials" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
@@ -117,16 +119,30 @@ public class Login extends AppCompatActivity implements AdapterView.OnItemSelect
                 passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //
+                        //extract email and send reset link
+                        String mail = resetMail.getText().toString();
+                        fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(Login.this,"Reset link sent to your mail",Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(Login.this,"Error resending the link" + e.getMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
 
                 passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //
+                        //close the dialog
                     }
                 });
+
+                passwordResetDialog.create().show();
 
             }
 
@@ -148,7 +164,7 @@ public class Login extends AppCompatActivity implements AdapterView.OnItemSelect
         }else if(text.equals("Propose Event")){
             startActivity(new Intent(Login.this,ProposeEvent.class));
         }else if(text.equals("Register")){
-            startActivity(new Intent(Login.this,ProposeEvent.class));
+            startActivity(new Intent(Login.this,RegisterAct.class));
         }else if(text.equals("Login")){
              startActivity(new Intent(Login.this, Login.class));
         }

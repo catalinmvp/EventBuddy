@@ -7,21 +7,55 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class Event extends AppCompatActivity {
+public class Event{
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event);
+    private String name,date,link,location;
 
-
-        ImageButton home  = findViewById(R.id.imageButton);
-
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Event.this,MainActivity.class));
-            }
-        });
+    public Event(String name, String date, String link, String location) {
+        this.name = name;
+        this.date = date;
+        this.link = link;
+        this.location = location;
     }
+
+    public Event(String name, String date) {
+        this.name = name;
+        this.date = date;
+    }
+
+    public Event() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
 }

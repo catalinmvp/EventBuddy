@@ -50,11 +50,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             startActivity(new Intent(MainActivity.this,Profile.class));
         }else if(text.equals("Propose Event")){
             startActivity(new Intent(MainActivity.this,ProposeEvent.class));
+        }else if(text.equals("Login")){
+            startActivity(new Intent(MainActivity.this, Login.class));
         }
-       // else if(text.equals("Login"))
-       // {
-       //     startActivity(new Intent(MainActivity.this, Login.class));
-      //  }
 
     }
 

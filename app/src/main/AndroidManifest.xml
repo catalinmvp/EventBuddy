@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EventBuddy">
-        <activity android:name=".Login"></activity>
+        <activity android:name=".Login" />
         <activity android:name=".Profile" />
-        <activity android:name=".Event" />
+        <activity android:name=".SingleEvent" />
         <activity android:name=".Events" />
         <activity android:name=".ProposeEvent" />
         <activity android:name=".RegisterAct" />
