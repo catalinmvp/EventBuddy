@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -59,7 +61,8 @@ public class Events extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
-//        Spinner spinner = findViewById(R.id.spinner);
+        Spinner spinner = findViewById(R.id.spinner);
+        spinner.setVisibility(View.INVISIBLE);
 //        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.features,android.R.layout.simple_spinner_item);
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        spinner.setAdapter(adapter);
@@ -105,6 +108,7 @@ public class Events extends AppCompatActivity {
                                         System.out.println("lalalal" + model.getLocation());
                                         holder.name.setText(model.getName());
                                         holder.date.setText(model.getDate());
+                                        eventArrayList.add(model);
                                         Log.d(TAG, document.getId() + " => " + document.getData());
                                     }
                                 } else {
@@ -119,8 +123,17 @@ public class Events extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
 
-                            //pt evenimente lista
+
+                            Bundle bundle = new Bundle(),bundle2 = new Bundle(),bundle3 = new Bundle(),bundle4 = new Bundle();
+                            bundle.putString("name",model.getName());
+                            bundle2.putString("date",model.getDate());
+                            bundle3.putString("location",model.getLocation());
+                            bundle4.putString("link",model.getLink());
                             Intent i = new Intent(Events.this,SingleEvent.class);
+                            i.putExtras(bundle);
+                            i.putExtras(bundle2);
+                            i.putExtras(bundle3);
+                            i.putExtras(bundle4);
                             v.getContext().startActivity(i);
                         }
                     });

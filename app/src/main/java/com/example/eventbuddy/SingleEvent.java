@@ -18,6 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+
 public class SingleEvent extends AppCompatActivity {
     TextView name,date,location,link;
     @Override
@@ -27,12 +29,24 @@ public class SingleEvent extends AppCompatActivity {
 
 
         Intent i = getIntent();
+        Bundle bundle = i.getExtras();
+        //final String title = (String) bundle.getSerializable("events");
+        String name2 = bundle.getString("name");
+        String date2 = bundle.getString("date");
+        String location2 = bundle.getString("location");
+        String link2 = bundle.getString("link");
 
         name = findViewById(R.id.EventTitle);
         date = findViewById(R.id.EventDate);
         location = findViewById(R.id.EventLocation);
-        //link = findViewById(R.id.EventLink);
-        //bundle pt a aduce ino
+        link = findViewById(R.id.EventLink);
+
+
+        name.setText(name2);
+        link.setText(link2);
+        date.setText(date2);
+        location.setText(location2);
+
         //graddle pt imagini hashed
         //afiseaza mai trb sa aduc datele din stanga in dreapta + glide pt poze
     }
